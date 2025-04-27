@@ -64,3 +64,5 @@ mono_crash.*.json
 
 # Jetbrains IDE files
 .idea/
+
+*.pdb
