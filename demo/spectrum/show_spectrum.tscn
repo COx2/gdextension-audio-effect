@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfyeamw4sg2af"]
+[gd_scene load_steps=5 format=3 uid="uid://dfyeamw4sg2af"]
 
-[ext_resource type="Script" uid="uid://bgwbn5yqn6chf" path="res://show_spectrum_stereo.gd" id="1_rnvon"]
-[ext_resource type="AudioStream" uid="uid://dl3ppges2sw77" path="res://maldita.ogg" id="2"]
-[ext_resource type="Script" uid="uid://hdhl07pk6um6" path="res://label_gain_value.gd" id="3_bcrbp"]
+[ext_resource type="Script" uid="uid://bgwbn5yqn6chf" path="res://scripts/show_spectrum_stereo.gd" id="1_rnvon"]
+[ext_resource type="AudioStream" uid="uid://dl3ppges2sw77" path="res://assets/maldita.ogg" id="2"]
+[ext_resource type="Script" uid="uid://14yam5loggt6" path="res://scripts/slider_gain_control.gd" id="3_2ayiy"]
+[ext_resource type="Script" uid="uid://hdhl07pk6um6" path="res://scripts/label_gain_value.gd" id="3_bcrbp"]
 
 [node name="ShowSpectrum" type="Node2D"]
 position = Vector2(136, 80)
@@ -26,6 +27,7 @@ offset_bottom = 513.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
+script = ExtResource("3_2ayiy")
 
 [node name="Label_Gain_Left" type="Label" parent="UI"]
 offset_left = 71.0
@@ -42,6 +44,8 @@ offset_bottom = 492.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
+script = ExtResource("3_2ayiy")
+selected_channel = 1
 
 [node name="Label_Gain_Right" type="Label" parent="UI"]
 offset_left = 1006.0

@@ -1,8 +1,8 @@
 [gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://byxtiup0hs2og"]
 
 [sub_resource type="GDEXStereoAmplify" id="GDEXStereoAmplify_j3pel"]
-volume_db_left = -32.6
-volume_db_right = -10.05
+volume_db_left = -12.0
+volume_db_right = -12.0
 resource_name = "GDEXStereoAmplify"
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_ihlsb"]
