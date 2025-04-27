@@ -12,7 +12,7 @@ void initialize_example_module(godot::ModuleInitializationLevel p_level)
         return;
     }
 
-    GDREGISTER_RUNTIME_CLASS(my_gdextension::GDCustomAmplify);
+    GDREGISTER_RUNTIME_CLASS(my_gdextension::AudioEffectMyAmplify);
 }
 
 void uninitialize_example_module(godot::ModuleInitializationLevel p_level)
