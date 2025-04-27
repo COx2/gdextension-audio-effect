@@ -1,0 +1,15 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://byxtiup0hs2og"]
+
+[sub_resource type="GDEXStereoAmplify" id="GDEXStereoAmplify_j3pel"]
+volume_db_left = -32.6
+volume_db_right = -10.05
+resource_name = "GDEXStereoAmplify"
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_ihlsb"]
+resource_name = "SpectrumAnalyzer"
+
+[resource]
+bus/0/effect/0/effect = SubResource("GDEXStereoAmplify_j3pel")
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_ihlsb")
+bus/0/effect/1/enabled = true
