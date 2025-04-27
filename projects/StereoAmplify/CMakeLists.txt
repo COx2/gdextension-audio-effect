@@ -9,7 +9,7 @@ file(GLOB_RECURSE
     "${CMAKE_CURRENT_LIST_DIR}/source/*.c"
     "${CMAKE_CURRENT_LIST_DIR}/source/*.cpp")
 
-# Add a dynamic library called StereoAmplify - this builds helloworld.dll
+# Add a dynamic library called StereoAmplify - this builds StereoAmplify.dll
 add_library(${PROJECT_NAME}
     SHARED 
     ${${PROJECT_NAME}_SOURCES})
