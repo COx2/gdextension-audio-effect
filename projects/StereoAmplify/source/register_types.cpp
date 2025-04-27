@@ -1,6 +1,6 @@
 #include "register_types.h"
 
-#include "gdexample.h"
+#include "stereo_amplify.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -8,17 +8,19 @@
 
 void initialize_example_module(godot::ModuleInitializationLevel p_level)
 {
-    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE)
+    {
         return;
     }
 
-    GDREGISTER_CLASS(my_gdextension::GDCustomAmplifyInstance);
-    GDREGISTER_CLASS(my_gdextension::GDCustomAmplify);
+    GDREGISTER_CLASS(my_gdextension::GDEXStereoAmplifyInstance);
+    GDREGISTER_CLASS(my_gdextension::GDEXStereoAmplify);
 }
 
 void uninitialize_example_module(godot::ModuleInitializationLevel p_level)
 {
-    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE)
+    {
         return;
     }
 }
@@ -27,7 +29,7 @@ extern "C"
 {
 
 // Initialization.
-GDExtensionBool GDE_EXPORT example_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, 
+GDExtensionBool GDE_EXPORT gdex_stereo_amplify_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, 
     const GDExtensionClassLibraryPtr p_library, 
     GDExtensionInitialization *r_initialization)
 {
