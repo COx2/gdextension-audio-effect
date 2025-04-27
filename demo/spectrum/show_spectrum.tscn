@@ -20,27 +20,30 @@ offset = Vector2(440, 100)
 [node name="UI" type="Node" parent="."]
 
 [node name="Slider_Gain_Left" type="VSlider" parent="UI"]
-offset_left = 73.0
-offset_top = 207.0
-offset_right = 113.0
-offset_bottom = 513.0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 128.0
+offset_bottom = 448.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
 script = ExtResource("3_2ayiy")
 
 [node name="Label_Gain_Left" type="Label" parent="UI"]
-offset_left = 71.0
-offset_top = 220.0
-offset_right = 134.0
-offset_bottom = 258.0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 128.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 script = ExtResource("3_bcrbp")
 
 [node name="Slider_Gain_Right" type="VSlider" parent="UI"]
-offset_left = 1003.0
-offset_top = 191.0
-offset_right = 1067.0
-offset_bottom = 492.0
+offset_left = 1032.0
+offset_top = 128.0
+offset_right = 1088.0
+offset_bottom = 448.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
@@ -48,9 +51,12 @@ script = ExtResource("3_2ayiy")
 selected_channel = 1
 
 [node name="Label_Gain_Right" type="Label" parent="UI"]
-offset_left = 1006.0
-offset_top = 213.0
-offset_right = 1073.0
-offset_bottom = 236.0
+offset_left = 1024.0
+offset_top = 64.0
+offset_right = 1091.0
+offset_bottom = 128.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 script = ExtResource("3_bcrbp")
 selected_channel = 1
