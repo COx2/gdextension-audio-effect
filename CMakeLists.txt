@@ -52,6 +52,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+find_package(juce REQUIRED)
+
 find_package(godot-cpp REQUIRED)
 
 add_subdirectory(projects)
