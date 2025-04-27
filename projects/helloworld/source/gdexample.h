@@ -1,24 +1,28 @@
 #pragma once
 
-#include <godot_cpp/classes/sprite2d.hpp>
+#include <godot_cpp/classes/audio_effect_amplify.hpp>
 
-namespace godot {
-
-class GDExample : public Sprite2D 
+namespace my_gdextension
 {
-    GDCLASS(GDExample, Sprite2D)
 
+class GDCustomAmplify
+    : public godot::AudioEffectAmplify
+{
 private:
-    double time_passed;
+    GDCLASS(GDCustomAmplify, godot::AudioEffectAmplify)
+
+public:
+    GDCustomAmplify();
+    ~GDCustomAmplify();
+
+    //void _process(double delta) override;
 
 protected:
     static void _bind_methods();
 
-public:
-    GDExample();
-    ~GDExample();
+private:
+    //double time_passed;
 
-    void _process(double delta) override;
 };
 
 }

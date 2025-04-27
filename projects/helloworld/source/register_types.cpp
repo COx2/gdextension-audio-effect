@@ -6,20 +6,18 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-using namespace godot;
-
-void initialize_example_module(ModuleInitializationLevel p_level)
+void initialize_example_module(godot::ModuleInitializationLevel p_level)
 {
-    if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
     }
 
-    GDREGISTER_RUNTIME_CLASS(GDExample);
+    GDREGISTER_RUNTIME_CLASS(my_gdextension::GDCustomAmplify);
 }
 
-void uninitialize_example_module(ModuleInitializationLevel p_level)
+void uninitialize_example_module(godot::ModuleInitializationLevel p_level)
 {
-    if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
     }
 }
@@ -36,7 +34,7 @@ GDExtensionBool GDE_EXPORT example_library_init(GDExtensionInterfaceGetProcAddre
 
     init_obj.register_initializer(initialize_example_module);
     init_obj.register_terminator(uninitialize_example_module);
-    init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
+    init_obj.set_minimum_library_initialization_level(godot::MODULE_INITIALIZATION_LEVEL_SCENE);
 
     return init_obj.init();
 }
