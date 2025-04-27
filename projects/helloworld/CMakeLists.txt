@@ -13,3 +13,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_LIST_DIR}/so
 target_link_libraries(${PROJECT_NAME} PUBLIC godot::cpp)
 
 source_group(TREE "${CMAKE_CURRENT_LIST_DIR}/source" PREFIX source FILES ${helloworld_SOURCES})
+
+# Copy .gdextension to build directory.
+add_custom_command(
+TARGET ${PROJECT_NAME}
+    POST_BUILD
+        COMMAND
+        ${CMAKE_COMMAND} -E
+        copy "${CMAKE_CURRENT_LIST_DIR}/gdextension_module_def/${PROJECT_NAME}.gdextension" $<TARGET_FILE_DIR:${PROJECT_NAME}>
+)
