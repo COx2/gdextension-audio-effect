@@ -1,61 +1,65 @@
 #pragma once
 
-#include <godot_cpp/classes/wrapped.hpp>
 #include <godot_cpp/classes/audio_effect.hpp>
 #include <godot_cpp/classes/audio_effect_instance.hpp>
-
-#include <godot_cpp/classes/audio_effect_amplify.hpp>
+#include <godot_cpp/classes/audio_frame.hpp>
 
 namespace my_gdextension
 {
 
 //==============================================================================
-class AudioEffectMyAmplify;
+class GDCustomAmplify;
 
 //==============================================================================
-class AudioEffectMyAmplifyInstance
+class GDCustomAmplifyInstance
     : public godot::AudioEffectInstance
 {
-private:
-    //==============================================================================
-    GDCLASS(AudioEffectMyAmplifyInstance, godot::AudioEffectInstance);
-    friend class AudioEffectMyAmplify;
-    godot::Ref<AudioEffectMyAmplify> base;
-
-    float mix_volume_db;
-
 public:
     //==============================================================================
-    virtual void _process(const void* p_src_buffer, godot::AudioFrame* p_dst_buffer, int32_t p_frame_count) override;
+    virtual void _process(const void* src_buffer, godot::AudioFrame* dst_buffer, int32_t frame_count) override;
     virtual bool _process_silence() const override;
-};
-
-//==============================================================================
-class AudioEffectMyAmplify
-    : public godot::AudioEffect 
-{
-private:
-    //==============================================================================
-    GDCLASS(AudioEffectMyAmplify, godot::AudioEffect);
-
-    friend class AudioEffectMyAmplifyInstance;
-    float volume_db;
 
 protected:
     //==============================================================================
     static void _bind_methods();
 
+private:
+    //==============================================================================
+    GDCLASS(GDCustomAmplifyInstance, godot::AudioEffectInstance);
+    friend class GDCustomAmplify;
+    godot::Ref<GDCustomAmplify> base;
+
+    float mix_volume_db;
+};
+
+//==============================================================================
+class GDCustomAmplify
+    : public godot::AudioEffect 
+{
 public:
     //==============================================================================
-    godot::Ref<godot::AudioEffectInstance> _instantiate() override;
-    void set_volume_db(float p_volume);
+    GDCustomAmplify();
+
+    //==============================================================================
+    void set_volume_db(float volume);
     float get_volume_db() const;
 
-    void set_volume_linear(float p_volume);
+    void set_volume_linear(float volume);
     float get_volume_linear() const;
 
     //==============================================================================
-    AudioEffectMyAmplify();
+    godot::Ref<godot::AudioEffectInstance> _instantiate() override;
+
+protected:
+    //==============================================================================
+    static void _bind_methods();
+
+private:
+    //==============================================================================
+    GDCLASS(GDCustomAmplify, godot::AudioEffect);
+
+    friend class GDCustomAmplifyInstance;
+    float volume_db;
 };
 
 }
