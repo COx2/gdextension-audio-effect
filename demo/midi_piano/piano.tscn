@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dctcehelc4sv0"]
+[gd_scene load_steps=3 format=3 uid="uid://dctcehelc4sv0"]
 
-[ext_resource type="Script" uid="uid://cp2cybxwqvltc" path="res://piano.gd" id="1"]
+[ext_resource type="Script" uid="uid://bnap1n0intn83" path="res://piano.gd" id="1"]
+
+[sub_resource type="GDEXJuceInstrumentAudioStream" id="GDEXJuceInstrumentAudioStream_onqjq"]
 
 [node name="Piano" type="ColorRect"]
 anchors_preset = 15
@@ -20,3 +22,7 @@ layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 0.6
 mouse_filter = 2
+
+[node name="JuceInstrumentPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("GDEXJuceInstrumentAudioStream_onqjq")
+autoplay = true

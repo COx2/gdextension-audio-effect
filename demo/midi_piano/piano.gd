@@ -14,12 +14,16 @@ const BlackKeyScene := preload("res://piano_keys/black_piano_key.tscn")
 
 var piano_key_dict := Dictionary()
 
+var juce_instrument: GDEXJuceInstrumentAudioStream
+
 @onready var white_keys: HBoxContainer = $WhiteKeys
 @onready var black_keys: HBoxContainer = $BlackKeys
 
 func _ready() -> void:
 	assert(not _is_note_index_sharp(_pitch_index_to_note_index(START_KEY)), "The start key can't be a sharp note (limitation of this piano-generating algorithm). Try 21.")
 
+	juce_instrument = get_node("JuceInstrumentPlayer").stream
+	
 	for i in range(START_KEY, END_KEY + 1):
 		piano_key_dict[i] = _create_piano_key(i)
 
@@ -30,7 +34,6 @@ func _ready() -> void:
 
 	if not OS.get_connected_midi_inputs().is_empty():
 		print(OS.get_connected_midi_inputs())
-
 
 func _input(input_event: InputEvent) -> void:
 	if input_event is not InputEventMIDI:
@@ -62,9 +65,11 @@ func _create_piano_key(pitch_index: int) -> PianoKey:
 	var piano_key: PianoKey
 	if _is_note_index_sharp(note_index):
 		piano_key = BlackKeyScene.instantiate()
+		piano_key.juce_instrument = self.juce_instrument
 		black_keys.add_child(piano_key)
 	else:
 		piano_key = WhiteKeyScene.instantiate()
+		piano_key.juce_instrument = self.juce_instrument
 		white_keys.add_child(piano_key)
 		if _is_note_index_lacking_sharp(note_index):
 			_add_placeholder_key(black_keys)
