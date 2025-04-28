@@ -124,12 +124,32 @@ void GDEXJuceInstrumentAudioStream::midi_all_notes_off(int p_midi_channel)
     midiKeyboardState->allNotesOff(p_midi_channel);
 }
 
+void GDEXJuceInstrumentAudioStream::load_sine_wave()
+{
+    demoSynthesizer->loadSineWave();
+}
+
+void GDEXJuceInstrumentAudioStream::load_custom_sound(godot::String p_file_path)
+{
+    // Godot String to UTF-8 string to juce::String
+    godot::CharString utf8_path = p_file_path.utf8();
+    juce::String juce_str_path = juce::String::fromUTF8(utf8_path.get_data(), utf8_path.length());
+
+    juce::File file_to_load = juce::File(juce_str_path);
+    if (file_to_load.existsAsFile())
+    {
+        demoSynthesizer->loadAudioSample(file_to_load.createInputStream());
+    }
+}
+
 //==============================================================================
 void GDEXJuceInstrumentAudioStream::_bind_methods()
 {
     godot::ClassDB::bind_method(godot::D_METHOD("midi_note_on", "midi_channel", "midi_note_number", "velocity"), &GDEXJuceInstrumentAudioStream::midi_note_on);
     godot::ClassDB::bind_method(godot::D_METHOD("midi_note_off", "midi_channel", "midi_note_number", "velocity"), &GDEXJuceInstrumentAudioStream::midi_note_off);
     godot::ClassDB::bind_method(godot::D_METHOD("midi_all_notes_off", "midi_channel"), &GDEXJuceInstrumentAudioStream::midi_all_notes_off);
+    godot::ClassDB::bind_method(godot::D_METHOD("load_sine_wave"), &GDEXJuceInstrumentAudioStream::load_sine_wave);
+    godot::ClassDB::bind_method(godot::D_METHOD("load_custom_sound", "file_path"), &GDEXJuceInstrumentAudioStream::load_custom_sound);
 }
 
 }

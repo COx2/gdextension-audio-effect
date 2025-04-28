@@ -66,6 +66,8 @@ public:
     void midi_note_on(int p_midi_channel, int p_midi_note_number, float p_velocity);
     void midi_note_off(int p_midi_channel, int p_midi_note_number, float p_velocity);
     void midi_all_notes_off(int p_midi_channel);
+    void load_sine_wave();
+    void load_custom_sound(godot::String p_file_path);
 
 protected:
     //==============================================================================
