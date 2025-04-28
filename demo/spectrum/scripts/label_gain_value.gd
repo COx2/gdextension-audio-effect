@@ -12,7 +12,7 @@ var effect_bus_idx: int = 0  # Bus where effects are inserted
 var effect_idx: int = 0  # The second effect in the chain (index 1)
 
 # Variable to store previous gain value
-var last_gain_value: float = 0.0
+var last_gain_value: float = -100.0
 
 # Called every frame
 func _process(_delta):
@@ -22,7 +22,7 @@ func _process(_delta):
 		
 	# Get current effect gain value
 	var effect = AudioServer.get_bus_effect(effect_bus_idx, effect_idx)
-	var current_gain = 0.0
+	var current_gain = -100.0
 	
 	if effect is GDEXStereoAmplify:
 		# Get value based on selected channel
