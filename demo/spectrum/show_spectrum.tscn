@@ -13,7 +13,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Root" type="Node2D"]
+[node name="ShowSpectrum" type="Node2D"]
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2")
@@ -82,13 +82,13 @@ autowrap_mode = 2
 script = ExtResource("3_bcrbp")
 selected_channel = 1
 
-[node name="ShowSpectrum" type="Node2D" parent="."]
+[node name="AudioSpectrum" type="Node2D" parent="."]
 
-[node name="Left" type="Node2D" parent="ShowSpectrum"]
+[node name="Left" type="Node2D" parent="AudioSpectrum"]
 position = Vector2(-256, -64)
 script = ExtResource("5_tgvly")
 
-[node name="Right" type="Node2D" parent="ShowSpectrum"]
+[node name="Right" type="Node2D" parent="AudioSpectrum"]
 position = Vector2(128, -64)
 script = ExtResource("5_tgvly")
 channel_to_display = 1

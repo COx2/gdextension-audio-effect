@@ -10,6 +10,7 @@ resource_name = "SpectrumAnalyzer"
 resource_name = "GDEXJuceReverb"
 
 [resource]
+bus/0/volume_db = -7.5114
 bus/0/effect/0/effect = SubResource("GDEXStereoAmplify_j3pel")
 bus/0/effect/0/enabled = true
 bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_ihlsb")
