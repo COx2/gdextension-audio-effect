@@ -6,7 +6,7 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-void initialize_example_module(godot::ModuleInitializationLevel p_level)
+void initialize_stereo_amplify_module(godot::ModuleInitializationLevel p_level)
 {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE)
     {
@@ -17,7 +17,7 @@ void initialize_example_module(godot::ModuleInitializationLevel p_level)
     GDREGISTER_CLASS(my_gdextension::GDEXStereoAmplify);
 }
 
-void uninitialize_example_module(godot::ModuleInitializationLevel p_level)
+void uninitialize_stereo_amplify_module(godot::ModuleInitializationLevel p_level)
 {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE)
     {
@@ -35,8 +35,8 @@ GDExtensionBool GDE_EXPORT gdex_stereo_amplify_init(GDExtensionInterfaceGetProcA
 {
     godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 
-    init_obj.register_initializer(initialize_example_module);
-    init_obj.register_terminator(uninitialize_example_module);
+    init_obj.register_initializer(initialize_stereo_amplify_module);
+    init_obj.register_terminator(uninitialize_stereo_amplify_module);
     init_obj.set_minimum_library_initialization_level(godot::MODULE_INITIALIZATION_LEVEL_SCENE);
 
     return init_obj.init();

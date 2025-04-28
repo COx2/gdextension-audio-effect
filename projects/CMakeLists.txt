@@ -1,2 +1,3 @@
 add_subdirectory(JuceReverb)
+add_subdirectory(JuceReverbWithUI)
 add_subdirectory(StereoAmplify)
