@@ -39,9 +39,10 @@ func _process(_delta):
 # Function to update the label text
 func _update_gain_label(gain_value):
 	# Format label text based on gain value
-	if gain_value <= -90.0:
-		self.text = "Gain: -∞ dB"
-	else:
-		# Add channel and bus information to the label
-		var channel_text = "Left" if selected_channel == Channel.LEFT else "Right"
-		self.text = channel_text + ": %.1f dB" % gain_value
+	var gain_text = "%.1f dB" % gain_value
+	if gain_value <= -80.0:
+		gain_text = "-∞ dB"
+
+	# Add channel and bus information to the label
+	var channel_text = "Left" if selected_channel == Channel.LEFT else "Right"
+	self.text = channel_text + "\n" + gain_text

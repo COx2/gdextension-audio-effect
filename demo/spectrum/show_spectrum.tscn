@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfyeamw4sg2af"]
+[gd_scene load_steps=7 format=3 uid="uid://dfyeamw4sg2af"]
 
 [ext_resource type="AudioStream" uid="uid://dl3ppges2sw77" path="res://assets/maldita.ogg" id="2"]
 [ext_resource type="Script" uid="uid://14yam5loggt6" path="res://scripts/slider_gain_control.gd" id="3_2ayiy"]
 [ext_resource type="Script" uid="uid://hdhl07pk6um6" path="res://scripts/label_gain_value.gd" id="3_bcrbp"]
-[ext_resource type="Script" uid="uid://vumimgm8dpal" path="res://reverb_ui.gd" id="5_oa8kj"]
+[ext_resource type="Script" uid="uid://vumimgm8dpal" path="res://scripts/reverb_control.gd" id="5_oa8kj"]
 [ext_resource type="Script" uid="uid://d2idxruiq84wb" path="res://scripts/show_spectrum_single.gd" id="5_tgvly"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tgvly"]
+bg_color = Color(0.6, 0.6, 0.6, 0.331)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Root" type="Node2D"]
 
@@ -15,33 +22,48 @@ autoplay = true
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 144)
 
-[node name="AmplifyUI" type="Node" parent="."]
+[node name="AmplifyUI" type="Node2D" parent="."]
+position = Vector2(-520, -103)
+
+[node name="Panel" type="Panel" parent="AmplifyUI"]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 176.0
+offset_bottom = 319.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tgvly")
+
+[node name="Label" type="Label" parent="AmplifyUI"]
+offset_left = 16.0
+offset_top = -10.0
+offset_right = 144.0
+offset_bottom = 14.0
+text = "StereoAmplify"
+horizontal_alignment = 1
 
 [node name="Slider_Gain_Left" type="VSlider" parent="AmplifyUI"]
-offset_left = -544.0
-offset_top = -64.0
-offset_right = -480.0
-offset_bottom = 192.0
+offset_top = 88.0
+offset_right = 64.0
+offset_bottom = 295.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
 script = ExtResource("3_2ayiy")
 
 [node name="Label_Gain_Left" type="Label" parent="AmplifyUI"]
-offset_left = -544.0
-offset_top = -128.0
-offset_right = -480.0
-offset_bottom = -64.0
+offset_top = 24.0
+offset_right = 64.0
+offset_bottom = 88.0
+text = "Left"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("3_bcrbp")
 
 [node name="Slider_Gain_Right" type="VSlider" parent="AmplifyUI"]
-offset_left = -448.0
-offset_top = -64.0
-offset_right = -384.0
-offset_bottom = 192.0
+offset_left = 96.0
+offset_top = 88.0
+offset_right = 160.0
+offset_bottom = 295.0
 min_value = -80.0
 max_value = 24.0
 step = 0.1
@@ -49,10 +71,11 @@ script = ExtResource("3_2ayiy")
 selected_channel = 1
 
 [node name="Label_Gain_Right" type="Label" parent="AmplifyUI"]
-offset_left = -448.0
-offset_top = -128.0
-offset_right = -384.0
-offset_bottom = -64.0
+offset_left = 96.0
+offset_top = 24.0
+offset_right = 160.0
+offset_bottom = 88.0
+text = "Right"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -62,59 +85,136 @@ selected_channel = 1
 [node name="ShowSpectrum" type="Node2D" parent="."]
 
 [node name="Left" type="Node2D" parent="ShowSpectrum"]
-position = Vector2(-320, -64)
+position = Vector2(-256, -64)
 script = ExtResource("5_tgvly")
 
 [node name="Right" type="Node2D" parent="ShowSpectrum"]
-position = Vector2(64, -64)
+position = Vector2(128, -64)
 script = ExtResource("5_tgvly")
 channel_to_display = 1
 
 [node name="ReverbUI" type="Node2D" parent="."]
-position = Vector2(-256, 256)
+position = Vector2(-251, 302)
 script = ExtResource("5_oa8kj")
+
+[node name="Panel" type="Panel" parent="ReverbUI"]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 800.0
+offset_bottom = 144.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tgvly")
+
+[node name="Label" type="Label" parent="ReverbUI"]
+offset_left = -16.0
+offset_top = -8.0
+offset_right = 112.0
+offset_bottom = 16.0
+text = "JuceReverb"
+horizontal_alignment = 1
 
 [node name="RoomSize" type="SpinBox" parent="ReverbUI"]
 offset_top = 64.0
 offset_right = 87.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 max_value = 1.0
 step = 0.01
+alignment = 1
+
+[node name="Label" type="Label" parent="ReverbUI/RoomSize"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -32.0
+offset_right = 82.0
+offset_bottom = -8.0
+text = "Rooom Size"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Damping" type="SpinBox" parent="ReverbUI"]
 offset_left = 128.0
 offset_top = 64.0
 offset_right = 215.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 max_value = 1.0
 step = 0.01
+alignment = 1
+
+[node name="Label" type="Label" parent="ReverbUI/Damping"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = -8.0
+text = "Damping"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Width" type="SpinBox" parent="ReverbUI"]
 offset_left = 256.0
 offset_top = 64.0
 offset_right = 343.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 max_value = 1.0
 step = 0.01
+alignment = 1
 
-[node name="WetLevel" type="SpinBox" parent="ReverbUI"]
+[node name="Label" type="Label" parent="ReverbUI/Width"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = -8.0
+text = "Width"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DryLevel" type="SpinBox" parent="ReverbUI"]
 offset_left = 384.0
 offset_top = 64.0
 offset_right = 471.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 max_value = 1.0
 step = 0.01
+alignment = 1
 
-[node name="DryLevel" type="SpinBox" parent="ReverbUI"]
+[node name="Label" type="Label" parent="ReverbUI/DryLevel"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = -8.0
+text = "Dry Level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WetLevel" type="SpinBox" parent="ReverbUI"]
 offset_left = 512.0
 offset_top = 64.0
 offset_right = 599.0
-offset_bottom = 128.0
+offset_bottom = 112.0
 max_value = 1.0
 step = 0.01
+alignment = 1
+
+[node name="Label" type="Label" parent="ReverbUI/WetLevel"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = -8.0
+text = "Wet Level"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="FreezeMode" type="CheckButton" parent="ReverbUI"]
-offset_left = 640.0
-offset_top = 64.0
-offset_right = 704.0
-offset_bottom = 128.0
+offset_left = 656.0
+offset_top = 72.0
+offset_right = 700.0
+offset_bottom = 96.0
+vertical_icon_alignment = 0
+
+[node name="Label" type="Label" parent="ReverbUI/FreezeMode"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = -40.0
+offset_right = 75.0
+offset_bottom = -16.0
+text = "Freeze Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
