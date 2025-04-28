@@ -9,8 +9,8 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 60.0
-offset_bottom = -60.0
+offset_top = 100.0
+offset_bottom = -20.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("1")
 
@@ -38,16 +38,16 @@ script = ExtResource("2_rkxpl")
 
 [node name="Button_SineWave" type="Button" parent="Control"]
 layout_mode = 0
-offset_left = 192.0
-offset_top = -52.0
-offset_right = 448.0
-offset_bottom = -12.0
+offset_left = 640.0
+offset_top = -76.0
+offset_right = 896.0
+offset_bottom = -36.0
 text = "Sine Wave Sound"
 
 [node name="Button_SamplerSound" type="Button" parent="Control"]
 layout_mode = 2
-offset_left = 576.0
-offset_top = -52.0
-offset_right = 832.0
-offset_bottom = -12.0
+offset_left = 960.0
+offset_top = -76.0
+offset_right = 1216.0
+offset_bottom = -36.0
 text = "Sampler Sound"

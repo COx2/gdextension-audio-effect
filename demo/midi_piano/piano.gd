@@ -6,8 +6,8 @@ extends Control
 # A 76-key piano goes from 23 to 98, 61-key from 36 to 96,
 # 49-key from 36 to 84, 37-key from 41 to 77, and 25-key
 # from 48 to 72. Middle C is pitch number 60, A440 is 69.
-const START_KEY = 21
-const END_KEY = 108
+const START_KEY = 36
+const END_KEY = 88
 
 const WhiteKeyScene := preload("res://piano_keys/white_piano_key.tscn")
 const BlackKeyScene := preload("res://piano_keys/black_piano_key.tscn")
