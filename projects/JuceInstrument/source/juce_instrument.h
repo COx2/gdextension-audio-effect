@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/audio_frame.hpp>
 
 #include <juce_audio_basics/juce_audio_basics.h>
+#include "JuceDemoSynthesizer.h"
 
 namespace my_gdextension
 {
@@ -76,7 +77,8 @@ private:
 
     friend class GDEXJuceInstrumentAudioStreamPlayback;
 
-    std::unique_ptr<juce::MidiKeyboardState> keyboardState;
+    std::unique_ptr<juce::MidiKeyboardState> midiKeyboardState;
+    std::unique_ptr<JuceDemoSynthesizer> demoSynthesizer;
 };
 
 }

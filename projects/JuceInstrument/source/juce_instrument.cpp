@@ -40,25 +40,16 @@ void GDEXJuceInstrumentAudioStreamPlayback::_seek(double p_position)
 
 int32_t GDEXJuceInstrumentAudioStreamPlayback::_mix(godot::AudioFrame* p_buffer, float p_rate_scale, int32_t p_frames)
 {
-    base->keyboardState;
+    juce::MidiBuffer midi_messages;
 
-    angleDelta = 2.0 * juce::MathConstants<double>::pi * 440.0 / currentSampleRate;
-
+    base->midiKeyboardState->processNextMidiBuffer(midi_messages, 0, p_frames, true);
+    
     juce::AudioBuffer<float> juce_audio_buffer(2, p_frames);
+    juce_audio_buffer.clear();
+    
+    base->demoSynthesizer->renderNextBlock(juce_audio_buffer, midi_messages, 0, juce_audio_buffer.getNumSamples());
 
-    for (int frame_idx = 0; frame_idx < p_frames; frame_idx++)
-    {
-        juce_audio_buffer.setSample(0, frame_idx, p_buffer[frame_idx].left);
-        juce_audio_buffer.setSample(1, frame_idx, p_buffer[frame_idx].right);
-    }
-
-    float* l_ch = juce_audio_buffer.getWritePointer(0);
-    float* r_ch = juce_audio_buffer.getWritePointer(1);
-    for (int n = 0; n < juce_audio_buffer.getNumSamples(); n++)
-    {
-        l_ch[n] = r_ch[n] = std::sin(currentAngle) * currentGain;
-        currentAngle += angleDelta;
-    }
+    midi_messages.clear();
 
     for (int frame_idx = 0; frame_idx < p_frames; frame_idx++)
     {
@@ -83,7 +74,9 @@ void GDEXJuceInstrumentAudioStreamPlayback::_bind_methods()
 //==============================================================================
 GDEXJuceInstrumentAudioStream::GDEXJuceInstrumentAudioStream()
 {
-    keyboardState = std::make_unique<juce::MidiKeyboardState>();
+    midiKeyboardState = std::make_unique<juce::MidiKeyboardState>();
+    demoSynthesizer = std::make_unique<JuceDemoSynthesizer>();
+    demoSynthesizer->loadSineWave();
 }
 
 godot::Ref<godot::AudioStreamPlayback> GDEXJuceInstrumentAudioStream::_instantiate_playback() const
@@ -94,6 +87,8 @@ godot::Ref<godot::AudioStreamPlayback> GDEXJuceInstrumentAudioStream::_instantia
 
     const auto mix_sample_rate = (double)godot::AudioServer::get_singleton()->get_mix_rate();
     new_instance->currentSampleRate = mix_sample_rate;
+
+    demoSynthesizer->setCurrentPlaybackSampleRate(new_instance->currentSampleRate);
 
     return new_instance;
 }
@@ -116,17 +111,17 @@ bool GDEXJuceInstrumentAudioStream::_is_monophonic() const
 //==============================================================================
 void GDEXJuceInstrumentAudioStream::midi_note_on(int p_midi_channel, int p_midi_note_number, float p_velocity)
 {
-    keyboardState->noteOn(p_midi_channel, p_midi_note_number, p_velocity);
+    midiKeyboardState->noteOn(p_midi_channel, p_midi_note_number, p_velocity);
 }
 
 void GDEXJuceInstrumentAudioStream::midi_note_off(int p_midi_channel, int p_midi_note_number, float p_velocity)
 {
-    keyboardState->noteOff(p_midi_channel, p_midi_note_number, p_velocity);
+    midiKeyboardState->noteOff(p_midi_channel, p_midi_note_number, p_velocity);
 }
 
 void GDEXJuceInstrumentAudioStream::midi_all_notes_off(int p_midi_channel)
 {
-    keyboardState->allNotesOff(p_midi_channel);
+    midiKeyboardState->allNotesOff(p_midi_channel);
 }
 
 //==============================================================================
