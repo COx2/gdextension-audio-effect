@@ -9,8 +9,8 @@ public:
     static std::unique_ptr<juce::AudioPluginInstance> loadVST3FromPath(const juce::String& filePath)
     {
         // Make sure the file exists
-        juce::File pluginFile(filePath);
-        if (!pluginFile.exists())
+        juce::File pluginFileOrBundle(filePath);
+        if (!pluginFileOrBundle.exists())
         {
             juce::String errorMessage = "Plugin file does not exist: " + filePath;
             juce::Logger::writeToLog(errorMessage);
@@ -18,7 +18,13 @@ public:
         }
         
         // Check if the file has a VST3 extension
-        if (!pluginFile.getFileExtension().equalsIgnoreCase(".vst3"))
+        if (pluginFileOrBundle.existsAsFile() && !pluginFileOrBundle.getFileExtension().equalsIgnoreCase(".vst3"))
+        {
+            juce::String errorMessage = "File is not a VST3 plugin: " + filePath;
+            juce::Logger::writeToLog(errorMessage);
+            return nullptr;
+        }
+        else if (!pluginFileOrBundle.isDirectory())
         {
             juce::String errorMessage = "File is not a VST3 plugin: " + filePath;
             juce::Logger::writeToLog(errorMessage);
@@ -50,7 +56,7 @@ public:
         
         // Create a description for the plugin we want to load
         juce::OwnedArray<juce::PluginDescription> descriptions;
-        vst3Format->findAllTypesForFile(descriptions, pluginFile.getFullPathName());
+        vst3Format->findAllTypesForFile(descriptions, pluginFileOrBundle.getFullPathName());
         
         if (descriptions.isEmpty())
         {

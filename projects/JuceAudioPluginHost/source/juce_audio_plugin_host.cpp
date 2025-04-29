@@ -143,7 +143,7 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
     juce::String juce_str_path = juce::String::fromUTF8(utf8_path.get_data(), utf8_path.length());
 
     juce::File file_to_load = juce::File(juce_str_path);
-    if (file_to_load.existsAsFile())
+    if (file_to_load.existsAsFile() || file_to_load.isDirectory())
     {
         bool is_new_plugin_valid = false;
 
