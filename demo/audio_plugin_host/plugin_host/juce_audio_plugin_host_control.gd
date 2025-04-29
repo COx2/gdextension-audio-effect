@@ -22,11 +22,12 @@ func _ready():
 	# FileDialog setup
 	file_dialog = FileDialog.new()
 	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_ANY
 	file_dialog.add_filter("*.vst3; VST3 File or Bundle")
 	file_dialog.title = "Select a VST3 File or Bundle"
 	file_dialog.size = Vector2(800, 580)
-	file_dialog.file_selected.connect(_on_file_selected)
+	file_dialog.file_selected.connect(_on_file_or_bundle_selected)
+	file_dialog.dir_selected.connect(_on_file_or_bundle_selected)
 	file_dialog.set_current_path("C:/Program Files/Common Files/VST3/")
 	add_child(file_dialog)
 	
@@ -34,8 +35,8 @@ func _on_button_load_audio_plugin_pressed():
 	# Show file dialog centered on screen
 	file_dialog.popup_centered()
 
-func _on_file_selected(path: String):
-	print("Selected file: " + path)
+func _on_file_or_bundle_selected(path: String):
+	print("Selected file or bundle: " + path)
 	if juce_audio_plugin_host:
 		juce_audio_plugin_host.load_audio_plugin(path)
 	else:
