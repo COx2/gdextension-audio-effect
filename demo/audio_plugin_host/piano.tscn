@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dctcehelc4sv0"]
 
 [ext_resource type="Script" uid="uid://bnap1n0intn83" path="res://piano.gd" id="1"]
-[ext_resource type="Script" uid="uid://c52tqll58ba18" path="res://juce_audio_plugin_host_control.gd" id="2_rkxpl"]
+[ext_resource type="Script" uid="uid://c52tqll58ba18" path="res://plugin_host/juce_audio_plugin_host_control.gd" id="2_rkxpl"]
 
 [sub_resource type="GDEXJuceAudioPluginHostAudioStream" id="GDEXJuceAudioPluginHostAudioStream_rkxpl"]
 
@@ -38,22 +38,21 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_rkxpl")
 
-[node name="Button_SineWave" type="Button" parent="Control"]
-visible = false
-layout_mode = 0
+[node name="Button_LoadAudioPlugin" type="Button" parent="Control"]
+layout_mode = 2
 offset_left = 640.0
 offset_top = -76.0
 offset_right = 896.0
 offset_bottom = -36.0
-text = "Sine Wave Sound"
+text = "Load Audio Plugin"
 
-[node name="Button_LoadPlugin" type="Button" parent="Control"]
-layout_mode = 2
+[node name="Button_OpenPluginEditor" type="Button" parent="Control"]
+layout_mode = 0
 offset_left = 960.0
 offset_top = -76.0
 offset_right = 1216.0
 offset_bottom = -36.0
-text = "Sampler Sound"
+text = "Open Plugin Editor"
 
 [node name="JuceAudioPluginHostPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("GDEXJuceAudioPluginHostAudioStream_rkxpl")
