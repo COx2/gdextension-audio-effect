@@ -1,0 +1,10 @@
+[configuration]
+
+entry_symbol = "gdex_juce_audio_plugin_host_init"
+compatibility_minimum = "4.4"
+reloadable = true
+
+[libraries]
+
+windows.debug.x86_64 = "res://bin/JuceAudioPluginHost.dll"
+windows.release.x86_64 = "res://bin/JuceAudioPluginHost.dll"

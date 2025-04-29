@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dctcehelc4sv0"]
+
+[ext_resource type="Script" uid="uid://bnap1n0intn83" path="res://piano.gd" id="1"]
+[ext_resource type="Script" uid="uid://c52tqll58ba18" path="res://juce_audio_plugin_host_control.gd" id="2_rkxpl"]
+
+[sub_resource type="GDEXJuceAudioPluginHostAudioStream" id="GDEXJuceAudioPluginHostAudioStream_rkxpl"]
+
+[node name="Piano" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 164.0
+offset_bottom = -128.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1")
+
+[node name="WhiteKeys" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BlackKeys" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.6
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_rkxpl")
+
+[node name="Button_SineWave" type="Button" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 640.0
+offset_top = -76.0
+offset_right = 896.0
+offset_bottom = -36.0
+text = "Sine Wave Sound"
+
+[node name="Button_LoadPlugin" type="Button" parent="Control"]
+layout_mode = 2
+offset_left = 960.0
+offset_top = -76.0
+offset_right = 1216.0
+offset_bottom = -36.0
+text = "Sampler Sound"
+
+[node name="JuceAudioPluginHostPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("GDEXJuceAudioPluginHostAudioStream_rkxpl")
+autoplay = true
