@@ -78,7 +78,8 @@ private:
 
     friend class GDEXJuceAudioPluginHostAudioStreamPlayback;
 
-    double currentSampleRate = 0.0;
+    double currentSampleRate{ 0.0 };
+    bool monoToStereo{ false };
 
     std::unique_ptr<juce::MidiKeyboardState> midiKeyboardState;
     std::unique_ptr<juce::AudioPluginFormatManager> audioPluginFormatManager;

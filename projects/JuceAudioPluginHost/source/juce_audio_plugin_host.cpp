@@ -47,7 +47,7 @@ int32_t GDEXJuceAudioPluginHostAudioStreamPlayback::_mix(godot::AudioFrame* p_bu
 
     base->midiKeyboardState->processNextMidiBuffer(midi_messages, 0, p_frames, true);
     
-    juce::AudioBuffer<float> juce_audio_buffer(2, p_frames);
+    juce::AudioBuffer<float> juce_audio_buffer(base->monoToStereo ? 1 : 2, p_frames);
     juce_audio_buffer.clear();
     
     if (base->audioPluginInstance.get() != nullptr)
@@ -60,7 +60,7 @@ int32_t GDEXJuceAudioPluginHostAudioStreamPlayback::_mix(godot::AudioFrame* p_bu
     for (int frame_idx = 0; frame_idx < p_frames; frame_idx++)
     {
         p_buffer[frame_idx].left = juce_audio_buffer.getSample(0, frame_idx);
-        p_buffer[frame_idx].right = juce_audio_buffer.getSample(1, frame_idx);
+        p_buffer[frame_idx].right = juce_audio_buffer.getSample(base->monoToStereo ? 0 : 1, frame_idx);
     }
 
     return p_frames;
@@ -145,6 +145,8 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
     juce::File file_to_load = juce::File(juce_str_path);
     if (file_to_load.existsAsFile())
     {
+        bool is_new_plugin_valid = false;
+
         auto new_plugin_instance = VST3PluginLoader::loadVST3FromPath(file_to_load.getFullPathName());
         if (new_plugin_instance.get() != nullptr)
         {
@@ -154,6 +156,8 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
             bool success = new_plugin_instance->setBusesLayout(new_buses_layout);
             if (success)
             {
+                monoToStereo = false;
+
                 new_plugin_instance->prepareToPlay(this->currentSampleRate, 512);
 
                 if (audioPluginEditorWindow.get() != nullptr)
@@ -162,11 +166,35 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
                 }
 
                 audioPluginInstance.swap(new_plugin_instance);
+
+                is_new_plugin_valid = true;
             }
             else
             {
-                godot::UtilityFunctions::print(p_plugin_file_path + " is not supported");
+                juce::AudioProcessor::BusesLayout new_buses_layout;
+                new_buses_layout.outputBuses.add(juce::AudioChannelSet::mono());
+                bool success = new_plugin_instance->setBusesLayout(new_buses_layout);
+                if (success)
+                {
+                    monoToStereo = true;
+
+                    new_plugin_instance->prepareToPlay(this->currentSampleRate, 512);
+
+                    if (audioPluginEditorWindow.get() != nullptr)
+                    {
+                        audioPluginEditorWindow.reset();
+                    }
+
+                    audioPluginInstance.swap(new_plugin_instance);
+
+                    is_new_plugin_valid = true;
+                }
             }
+        }
+
+        if (!is_new_plugin_valid)
+        {
+            godot::UtilityFunctions::print(p_plugin_file_path + " is not supported");
         }
     }
 }
