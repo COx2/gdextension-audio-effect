@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dctcehelc4sv0"]
+[gd_scene load_steps=5 format=3 uid="uid://dctcehelc4sv0"]
 
 [ext_resource type="Script" uid="uid://bnap1n0intn83" path="res://piano.gd" id="1"]
 [ext_resource type="Script" uid="uid://c52tqll58ba18" path="res://plugin_host/juce_audio_plugin_host_control.gd" id="2_rkxpl"]
+[ext_resource type="Script" uid="uid://dplan6n8wgr1x" path="res://spectrum/show_spectrum_single.gd" id="3_ys1d8"]
 
 [sub_resource type="GDEXJuceAudioPluginHostAudioStream" id="GDEXJuceAudioPluginHostAudioStream_rkxpl"]
 
@@ -9,8 +10,8 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 164.0
-offset_bottom = -236.0
+offset_top = 100.0
+offset_bottom = -300.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -57,3 +58,22 @@ text = "Open Plugin Editor"
 [node name="JuceAudioPluginHostPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("GDEXJuceAudioPluginHostAudioStream_rkxpl")
 autoplay = true
+
+[node name="AudioSpectrumBackground" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 260.0
+offset_right = 1088.0
+offset_bottom = 524.0
+color = Color(0, 0, 0, 1)
+
+[node name="AudioSpectrum" type="Node2D" parent="AudioSpectrumBackground"]
+
+[node name="Left" type="Node2D" parent="AudioSpectrumBackground/AudioSpectrum"]
+position = Vector2(64, 24)
+script = ExtResource("3_ys1d8")
+
+[node name="Right" type="Node2D" parent="AudioSpectrumBackground/AudioSpectrum"]
+position = Vector2(512, 24)
+script = ExtResource("3_ys1d8")
+channel_to_display = 1
