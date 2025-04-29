@@ -7,17 +7,15 @@ func _ready():
 	juce_audio_plugin_host = get_node("../JuceAudioPluginHostPlayer").stream
 	
 	# Button setup
-	var button_sampler = get_node("Button_LoadAudioPlugin")
-	button_sampler.text = "Load Audio Plugin"
-	button_sampler.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button_sampler.pressed.connect(_on_button_load_audio_plugin_pressed)
-	add_child(button_sampler)
+	var button_load_audio_plugin = get_node("Button_LoadAudioPlugin")
+	button_load_audio_plugin.text = "Load Audio Plugin"
+	button_load_audio_plugin.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	button_load_audio_plugin.pressed.connect(_on_button_load_audio_plugin_pressed)
 	
 	var button_open_plugin_editor = get_node("Button_OpenPluginEditor")
 	button_open_plugin_editor.text = "Open Plugin Editor"
 	button_open_plugin_editor.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button_open_plugin_editor.pressed.connect(_on_button_open_plugin_editor_pressed)
-	add_child(button_open_plugin_editor)
 	
 	# FileDialog setup
 	file_dialog = FileDialog.new()
