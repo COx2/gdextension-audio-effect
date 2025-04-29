@@ -66,6 +66,7 @@ public:
     void midi_note_off(int p_midi_channel, int p_midi_note_number, float p_velocity);
     void midi_all_notes_off(int p_midi_channel);
     void load_audio_plugin(godot::String p_plugin_file_path);
+    void open_plugin_editor();
 
 protected:
     //==============================================================================
@@ -82,6 +83,7 @@ private:
     std::unique_ptr<juce::MidiKeyboardState> midiKeyboardState;
     std::unique_ptr<juce::AudioPluginFormatManager> audioPluginFormatManager;
     std::unique_ptr<juce::AudioPluginInstance> audioPluginInstance;
+    std::unique_ptr<juce::DocumentWindow> audioPluginEditorWindow;
 };
 
 }

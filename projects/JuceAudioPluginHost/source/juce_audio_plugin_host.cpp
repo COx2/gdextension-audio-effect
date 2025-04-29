@@ -5,6 +5,9 @@
 #include <godot_cpp/classes/audio_server.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include "juce_audio_plugin_editor_window.h"
+#include <juce_events/juce_events.h>
+
 namespace my_gdextension
 {
 
@@ -76,9 +79,12 @@ void GDEXJuceAudioPluginHostAudioStreamPlayback::_bind_methods()
 // GDEXJuceAudioPluginHostAudioStream
 //==============================================================================
 GDEXJuceAudioPluginHostAudioStream::GDEXJuceAudioPluginHostAudioStream()
-    : audioPluginInstance(nullptr)
-    , midiKeyboardState(std::make_unique<juce::MidiKeyboardState>())
+    : midiKeyboardState(std::make_unique<juce::MidiKeyboardState>())
+    , audioPluginInstance(nullptr)
+    , audioPluginEditorWindow(nullptr)
 {
+    juce::initialiseJuce_GUI();
+
     currentSampleRate = (double)godot::AudioServer::get_singleton()->get_mix_rate();
 }
 
@@ -149,6 +155,12 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
             if (success)
             {
                 new_plugin_instance->prepareToPlay(this->currentSampleRate, 512);
+
+                if (audioPluginEditorWindow.get() != nullptr)
+                {
+                    audioPluginEditorWindow.reset();
+                }
+
                 audioPluginInstance.swap(new_plugin_instance);
             }
             else
@@ -159,6 +171,27 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
     }
 }
 
+void GDEXJuceAudioPluginHostAudioStream::open_plugin_editor()
+{
+    if (audioPluginInstance.get() != nullptr && audioPluginInstance->hasEditor())
+    {
+        if (audioPluginEditorWindow.get() != nullptr)
+        {
+            audioPluginEditorWindow.reset();
+        }
+
+        juce::MessageManager::callAsync([this]() {
+            audioPluginEditorWindow = std::make_unique<GDEXJuceAudioPluginHostEditorWindow>(audioPluginInstance->getName());
+
+            audioPluginEditorWindow->setUsingNativeTitleBar(true);
+            audioPluginEditorWindow->setContentOwned(audioPluginInstance->createEditor(), true);
+            audioPluginEditorWindow->setResizable(false, false);
+            audioPluginEditorWindow->setCentreRelative(0.5f, 0.5f);
+            audioPluginEditorWindow->setVisible(true);
+            });
+    }
+}
+
 //==============================================================================
 void GDEXJuceAudioPluginHostAudioStream::_bind_methods()
 {
@@ -166,6 +199,7 @@ void GDEXJuceAudioPluginHostAudioStream::_bind_methods()
     godot::ClassDB::bind_method(godot::D_METHOD("midi_note_off", "midi_channel", "midi_note_number", "velocity"), &GDEXJuceAudioPluginHostAudioStream::midi_note_off);
     godot::ClassDB::bind_method(godot::D_METHOD("midi_all_notes_off", "midi_channel"), &GDEXJuceAudioPluginHostAudioStream::midi_all_notes_off);
     godot::ClassDB::bind_method(godot::D_METHOD("load_audio_plugin", "p_plugin_file_path"), &GDEXJuceAudioPluginHostAudioStream::load_audio_plugin);
+    godot::ClassDB::bind_method(godot::D_METHOD("open_plugin_editor"), &GDEXJuceAudioPluginHostAudioStream::open_plugin_editor);
 }
 
 }
