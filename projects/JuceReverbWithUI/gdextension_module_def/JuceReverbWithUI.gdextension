@@ -8,3 +8,7 @@ reloadable = true
 
 windows.debug.x86_64 = "res://bin/JuceReverbWithUI.dll"
 windows.release.x86_64 = "res://bin/JuceReverbWithUI.dll"
+macos.debug.x86_64 = "res://bin/libJuceReverbWithUI.dylib"
+macos.release.x86_64 = "res://bin/libJuceReverbWithUI.dylib"
+macos.debug.arm64 = "res://bin/libJuceReverbWithUI.dylib"
+macos.release.arm64 = "res://bin/libJuceReverbWithUI.dylib"

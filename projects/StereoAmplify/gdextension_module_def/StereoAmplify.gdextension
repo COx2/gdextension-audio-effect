@@ -8,3 +8,7 @@ reloadable = true
 
 windows.debug.x86_64 = "res://bin/StereoAmplify.dll"
 windows.release.x86_64 = "res://bin/StereoAmplify.dll"
+macos.debug.x86_64 = "res://bin/libStereoAmplify.dylib"
+macos.release.x86_64 = "res://bin/libStereoAmplify.dylib"
+macos.debug.arm64 = "res://bin/libStereoAmplify.dylib"
+macos.release.arm64 = "res://bin/libStereoAmplify.dylib"

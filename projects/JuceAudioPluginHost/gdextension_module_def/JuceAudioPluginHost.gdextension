@@ -8,3 +8,7 @@ reloadable = true
 
 windows.debug.x86_64 = "res://bin/JuceAudioPluginHost.dll"
 windows.release.x86_64 = "res://bin/JuceAudioPluginHost.dll"
+macos.debug.x86_64 = "res://bin/libJuceAudioPluginHost.dylib"
+macos.release.x86_64 = "res://bin/libJuceAudioPluginHost.dylib"
+macos.debug.arm64 = "res://bin/libJuceAudioPluginHost.dylib"
+macos.release.arm64 = "res://bin/libJuceAudioPluginHost.dylib"
