@@ -42,6 +42,9 @@ target_link_libraries(${PROJECT_NAME}
         juce::juce_graphics
         juce::juce_gui_basics
         juce::juce_gui_extra
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        juce::juce_recommended_warning_flags
         )
 
 source_group(TREE "${CMAKE_CURRENT_LIST_DIR}/source" 
