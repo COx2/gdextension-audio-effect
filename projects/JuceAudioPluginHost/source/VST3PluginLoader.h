@@ -6,13 +6,13 @@ class VST3PluginLoader
 {
 public:
     // Load a VST3 plugin from a file path
-    static std::unique_ptr<juce::AudioPluginInstance> loadVST3FromPath(const juce::String& filePath)
+    static std::unique_ptr<juce::AudioPluginInstance> loadVST3FromPath(const juce::String& fileOrBundlePath)
     {
         // Make sure the file exists
-        juce::File pluginFileOrBundle(filePath);
+        juce::File pluginFileOrBundle(fileOrBundlePath);
         if (!pluginFileOrBundle.exists())
         {
-            juce::String errorMessage = "Plugin file does not exist: " + filePath;
+            juce::String errorMessage = "Plugin file does not exist: " + fileOrBundlePath;
             juce::Logger::writeToLog(errorMessage);
             return nullptr;
         }
@@ -20,13 +20,13 @@ public:
         // Check if the file has a VST3 extension
         if (pluginFileOrBundle.existsAsFile() && !pluginFileOrBundle.getFileExtension().equalsIgnoreCase(".vst3"))
         {
-            juce::String errorMessage = "File is not a VST3 plugin: " + filePath;
+            juce::String errorMessage = "File is not a VST3 plugin: " + fileOrBundlePath;
             juce::Logger::writeToLog(errorMessage);
             return nullptr;
         }
-        else if (!pluginFileOrBundle.isDirectory())
+        else if (pluginFileOrBundle.isDirectory() && !pluginFileOrBundle.getFileExtension().equalsIgnoreCase(".vst3"))
         {
-            juce::String errorMessage = "File is not a VST3 plugin: " + filePath;
+            juce::String errorMessage = "Bundle is not a VST3 plugin: " + fileOrBundlePath;
             juce::Logger::writeToLog(errorMessage);
             return nullptr;
         }
@@ -60,7 +60,7 @@ public:
         
         if (descriptions.isEmpty())
         {
-            juce::String errorMessage = "No plugin found in file: " + filePath;
+            juce::String errorMessage = "No plugin found in file: " + fileOrBundlePath;
             juce::Logger::writeToLog(errorMessage);
             return nullptr;
         }
