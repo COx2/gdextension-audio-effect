@@ -154,6 +154,13 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
             juce::AudioProcessor::BusesLayout new_buses_layout;
             new_buses_layout.outputBuses.add(juce::AudioChannelSet::stereo());
             bool success = new_plugin_instance->setBusesLayout(new_buses_layout);
+            
+            if(!success)
+            {
+                new_buses_layout.inputBuses.add(juce::AudioChannelSet::stereo());
+                success = new_plugin_instance->setBusesLayout(new_buses_layout);
+            }
+            
             if (success)
             {
                 monoToStereo = false;
@@ -174,6 +181,13 @@ void GDEXJuceAudioPluginHostAudioStream::load_audio_plugin(godot::String p_plugi
                 juce::AudioProcessor::BusesLayout new_buses_layout;
                 new_buses_layout.outputBuses.add(juce::AudioChannelSet::mono());
                 bool success = new_plugin_instance->setBusesLayout(new_buses_layout);
+                
+                if(!success)
+                {
+                    new_buses_layout.inputBuses.add(juce::AudioChannelSet::mono());
+                    success = new_plugin_instance->setBusesLayout(new_buses_layout);
+                }
+                
                 if (success)
                 {
                     monoToStereo = true;
